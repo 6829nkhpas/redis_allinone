@@ -13,13 +13,21 @@ async function redisDataStructures(){
     try{
         await client.connect();
         console.log('Connected to Redis');
-        //set operations
-        await client.sAdd('myset', ['Naman', 'kanika', 'armit','arjun']);
-        const members = await client.sMembers('myset');
-    console.log(members);
-    await client.sRem('myset','arjun');    
-     console.log(await client.sMembers('myset'));
-     console.log(await client.sIsMember('kanika'));
+ 
+
+    await client.zAdd('cart',[
+        {score: 100, value: 'apple'},
+        {score: 20, value: 'banana'},
+        {score: 300, value: 'cherry'},
+    ])
+    const cartdata = await client.zRange('cart', 0, -1);
+    console.log(cartdata);
+    const scoredData = await client.zRangeWithScores('cart', 0, -1);
+    console.log(scoredData);
+    
+    const rank = await client.zRank('cart', 'cherry');
+    console.log(rank);
+   
      
          
     }catch (e) {
