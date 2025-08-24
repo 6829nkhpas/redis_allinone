@@ -19,6 +19,9 @@ async function testconnection() {
     console.log('value', value);
     const deletecount = await client.del('key');
     console.log('Deleted count', deletecount);
+    await client.set('val',100);
+    console.log(await client.incr('val'));
+    
   
     
 
